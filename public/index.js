@@ -38,9 +38,9 @@ var populateInfo = function(countries,option){
           var borders = document.createElement('ul');
           borders.innerText = "Bordering Countries: ";
           for (border of country.borders) {
-            var country = document.createElement('li');
-            country.innerText = border;
-            borders.appendChild(country);
+            var borderingCountry = document.createElement('li');
+            borderingCountry.innerText = border;
+            borders.appendChild(borderingCountry);
           }
           ul.appendChild(borders);
           container.appendChild(ul);
@@ -61,22 +61,17 @@ var populateList= function(countries){
     select.add(option);
     ul.appendChild(select);
   })
-
-  select.onchange = function(){populateInfo(countries,select.value)};
+    var savedcountry = JSON.parse(localStorage.getItem('last view'));
+    console.log( "Saved data is pulled back --- "+ savedcountry.name)
+    select.value = savedcountry.name;
+    populateInfo(countries,savedcountry.name);
+    select.onchange = function(){populateInfo(countries,select.value)};
 }
 
 var app = function(){
 
   var url = "https://restcountries.eu/rest/v1";
   makeRequest(url, requestComplete);
-
-  var savedcountry = JSON.parse(localStorage.getItem('last view'));
-  console.log( "Saved data is pulled back --- "+ savedcountry.name)
-
-  var select= document.querySelector('select');
-
-  select.value = savedcountry.name;
-
 
  }
 
